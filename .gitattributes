@@ -6,6 +6,7 @@
 
 # Vendored minified runtime; preserve upstream bytes and suppress text diff checks.
 reference-studio/assets/gsap.min.js -text whitespace=-trailing-space,-blank-at-eof
+new-reference-studio/assets/gsap.min.js -text whitespace=-trailing-space,-blank-at-eof
 reference-uploads/* -text
 
 # Regression-test media under packages/producer/tests — RECURSIVE (`**`) so
