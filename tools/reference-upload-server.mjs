@@ -17,6 +17,7 @@ const REPO_ROOT = resolve(ROOT, "..");
 const MAX_FILE_BYTES = 95 * 1024 ** 2; // GitHub rejects individual Git blobs over 100 MB.
 const MAX_CHUNK_BYTES = 16 * 1024 ** 2;
 const execFileAsync = promisify(execFile);
+let gitQueue = Promise.resolve();
 await mkdir(PARTS, { recursive: true });
 
 const MIME = {
@@ -49,6 +50,11 @@ const cleanName = (value) => {
 };
 const uploadDir = (id) => join(PARTS, id);
 const validId = (id) => /^[a-f0-9-]{36}$/.test(id);
+const withGitQueue = (task) => {
+  const result = gitQueue.then(task, task);
+  gitQueue = result.catch(() => {});
+  return result;
+};
 
 async function currentBranch() {
   const { stdout } = await execFileAsync("git", ["branch", "--show-current"], { cwd: REPO_ROOT });
@@ -258,7 +264,7 @@ const server = createServer(async (req, res) => {
       await rename(partial, destination);
       // "Ready" is a durability boundary: acknowledge only after GitHub accepts
       // the commit. Keep the chunks available when persistence fails.
-      const branch = await persistToPublicGit(destination);
+      const branch = await withGitQueue(() => persistToPublicGit(destination));
       await rm(dir, { recursive: true, force: true });
       return json(res, 201, {
         ok: true,
@@ -278,7 +284,7 @@ const server = createServer(async (req, res) => {
         safe = cleanName(name);
       if (safe !== name) return json(res, 400, { error: "invalid filename" });
       const path = join(ROOT, safe);
-      await removeFromPublicGit(path);
+      await withGitQueue(() => removeFromPublicGit(path));
       return json(res, 200, {
         ok: true,
         warning: "Removed from the current branch; public Git history may retain earlier bytes.",
