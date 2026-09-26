@@ -4,6 +4,10 @@
 # and trips GitHub's "Binary file not shown" diff heuristic.
 * text=auto eol=lf
 
+# Vendored minified runtime; preserve upstream bytes and suppress text diff checks.
+reference-studio/assets/gsap.min.js -text whitespace=-trailing-space,-blank-at-eof
+reference-uploads/* -text
+
 # Regression-test media under packages/producer/tests — RECURSIVE (`**`) so
 # media in ANY nested fixture dir routes to LFS. The earlier non-recursive
 # patterns (`tests/*/output/...`, `tests/*/src/...`) only matched one level

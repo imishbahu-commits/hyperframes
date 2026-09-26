@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=720, height=1280">
+    <title>Every Frame Tells a Story — Recreated</title>
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 720px; height: 1280px; overflow: hidden; background: #ececea; }
+      body { font-family: Arial, Helvetica, sans-serif; }
+      #film { position: absolute; inset: 0; width: 720px; height: 1280px; overflow: hidden; background: #ececea; }
+      .clip { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+      .plate { position: absolute; inset: -3%; width: 106%; height: 106%; object-fit: cover; transform-origin: 50% 50%; will-change: transform, filter, opacity; }
+      .paper { position: absolute; inset: 0; pointer-events: none; z-index: 80; opacity: .17; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.74' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E"); }
+      .grade { position: absolute; inset: 0; pointer-events: none; z-index: 90; box-shadow: inset 0 0 120px rgba(0,0,0,.24); background: radial-gradient(circle at 50% 45%, transparent 55%, rgba(20,20,20,.12) 100%); }
+      .lime-slice { position: absolute; z-index: 5; background: #d8ff00; box-shadow: 0 12px 24px rgba(0,0,0,.22); }
+      #s1 .lime-slice { width: 760px; height: 165px; left: -20px; top: 520px; transform: rotate(-3deg); }
+      .word-echo { position: absolute; z-index: 6; left: 45px; color: #171717; font-size: 87px; font-weight: 900; font-style: italic; letter-spacing: -6px; line-height: .84; opacity: .78; }
+      .echo-a { top: 350px; } .echo-b { top: 820px; }
+      .focus-corner { position: absolute; width: 105px; height: 105px; z-index: 20; opacity: .9; }
+      .focus-corner.tl { left: 102px; top: 286px; border-left: 3px solid #222; border-top: 3px solid #222; }
+      .focus-corner.tr { right: 94px; top: 286px; border-right: 3px solid #222; border-top: 3px solid #222; }
+      .focus-corner.bl { left: 102px; bottom: 264px; border-left: 3px solid #222; border-bottom: 3px solid #222; }
+      .focus-corner.br { right: 94px; bottom: 264px; border-right: 3px solid #222; border-bottom: 3px solid #222; }
+      .scan { position: absolute; z-index: 25; top: 0; bottom: 0; width: 178px; left: -190px; background: rgba(216,255,0,.67); mix-blend-mode: multiply; }
+      .yellow-mark { position: absolute; z-index: 30; width: 110px; height: 13px; background: #ffd400; left: 404px; top: 470px; transform: rotate(-9deg); }
+      .pulse-ring { position: absolute; z-index: 25; width: 250px; height: 250px; left: 235px; top: 470px; border-radius: 50%; border: 6px solid rgba(216,255,0,.8); opacity: 0; }
+      .credit-copy { position: absolute; z-index: 10; inset: 0; display: grid; place-items: center; color: #202020; font-family: Georgia, serif; font-style: italic; font-size: 21px; letter-spacing: -.5px; }
+      .credit-copy span { margin-left: 168px; font-family: cursive; font-size: 39px; font-weight: 400; }
+      audio { display: none; }
+    </style>
+  </head>
+  <body>
+    <main data-hf-id="hf-oc92" id="film" data-composition-id="reference-recreation" data-width="720" data-height="1280" data-duration="11.93">
+      <section data-hf-id="hf-reur" id="s1" class="clip" data-start="0" data-duration="2.20" data-track-index="1">
+        <div data-hf-id="hf-bvrm" class="lime-slice"></div><div data-hf-id="hf-skp1" class="word-echo echo-a">STORYTELLING</div><div data-hf-id="hf-idhy" class="word-echo echo-b">STORYTELLING</div>
+        <img data-hf-id="hf-5evq" class="plate" src="assets/storytelling.png" alt="A philosopher editing a story">
+      </section>
+      <section data-hf-id="hf-l282" id="s2" class="clip" data-start="2.20" data-duration="2.20" data-track-index="1">
+        <img data-hf-id="hf-e5y2" class="plate" src="assets/every-cut.png" alt="Every cut is a decision">
+        <div data-hf-id="hf-544y" class="pulse-ring"></div>
+      </section>
+      <section data-hf-id="hf-1yfe" id="s3" class="clip" data-start="4.40" data-duration="2.67" data-track-index="1">
+        <img data-hf-id="hf-2bhp" class="plate" src="assets/every-frame.png" alt="Every frame tells a story">
+        <div data-hf-id="hf-az1f" class="scan"></div><i data-hf-id="hf-7rle" class="focus-corner tl"></i><i data-hf-id="hf-dxf8" class="focus-corner tr"></i><i data-hf-id="hf-bdmg" class="focus-corner bl"></i><i data-hf-id="hf-qyzy" class="focus-corner br"></i>
+      </section>
+      <section data-hf-id="hf-9k9m" id="s4" class="clip" data-start="7.07" data-duration="1.94" data-track-index="1">
+        <img data-hf-id="hf-a8wo" class="plate" src="assets/editing.png" alt="Editing is more than a skill">
+        <div data-hf-id="hf-kc5q" class="yellow-mark"></div>
+      </section>
+      <section data-hf-id="hf-8t3x" id="s5" class="clip" data-start="9.01" data-duration="1.45" data-track-index="1">
+        <img data-hf-id="hf-h4eg" class="plate" src="assets/feeling.png" alt="It is a feeling">
+      </section>
+      <section data-hf-id="hf-eeab" id="s6" class="clip" data-start="10.46" data-duration="1.47" data-track-index="1">
+        <img data-hf-id="hf-d70b" class="plate" src="assets/credit.png" alt="Editor credit">
+        <div data-hf-id="hf-hbhs" class="credit-copy">edit by <span data-hf-id="hf-7l3j">Hyperframes</span></div>
+      </section>
+      <audio data-hf-id="hf-enfs" id="soundtrack" class="clip" src="assets/reference-soundtrack.mp3" data-start="0" data-duration="11.93" data-track-index="2"></audio>
+      <div data-hf-id="hf-2ava" class="paper"></div><div data-hf-id="hf-jezh" class="grade"></div>
+    </main>
+    <script>
+      const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+      tl.fromTo("#s1 .lime-slice", { x: -760, scaleX: .15, filter: "blur(18px)" }, { x: 0, scaleX: 1, filter: "blur(0px)", duration: .42, ease: "expo.out" }, .12)
+        .fromTo("#s1 .plate", { scale: 1.72, rotation: 8, opacity: 0, filter: "blur(24px)" }, { scale: 1.03, rotation: 0, opacity: 1, filter: "blur(0px)", duration: .74, ease: "power4.out" }, .31)
+        .fromTo("#s1 .word-echo", { x: -120, opacity: 0 }, { x: 0, opacity: .78, duration: .48, stagger: .08 }, .48)
+        .to("#s1 .plate", { scale: 1, y: -8, duration: 1.05, ease: "sine.inOut" }, 1.05)
+        .to("#s1 .plate, #s1 .lime-slice, #s1 .word-echo", { scale: 1.11, filter: "blur(17px)", opacity: .1, duration: .22, ease: "power2.in" }, 1.98);
+
+      tl.fromTo("#s2 .plate", { scale: 1.45, x: 35, filter: "blur(22px)", opacity: 0 }, { scale: 1.03, x: 0, filter: "blur(0px)", opacity: 1, duration: .48, ease: "expo.out" }, 2.20)
+        .fromTo("#s2 .pulse-ring", { scale: .35, opacity: .8 }, { scale: 1.5, opacity: 0, duration: .60, ease: "power2.out" }, 2.32)
+        .to("#s2 .plate", { scale: .95, x: -18, y: 22, duration: .78, ease: "power2.inOut" }, 3.34)
+        .to("#s2 .plate, #s2 .pulse-ring", { scale: 1.12, filter: "blur(16px)", opacity: .15, duration: .24, ease: "power2.in" }, 4.16);
+
+      tl.fromTo("#s3 .plate", { scale: 1.28, x: -70, filter: "blur(22px)", opacity: 0 }, { scale: 1.02, x: 0, filter: "blur(0px)", opacity: 1, duration: .42, ease: "power4.out" }, 4.40)
+        .fromTo("#s3 .focus-corner", { scale: .4, opacity: 0 }, { scale: 1, opacity: .9, duration: .35, stagger: .035 }, 4.55)
+        .to("#s3 .scan", { x: 910, duration: .88, ease: "power2.inOut" }, 4.62)
+        .to("#s3 .plate", { scale: 1.38, x: 118, y: -18, duration: .26, ease: "expo.inOut" }, 5.46)
+        .to("#s3 .plate", { scale: 1.31, x: 104, duration: 1.20, ease: "sine.inOut" }, 5.72)
+        .to("#s3 .plate, #s3 .focus-corner, #s3 .scan", { x: -80, scale: 1.12, filter: "blur(20px)", opacity: 0, duration: .20, ease: "power3.in" }, 6.87);
+
+      tl.fromTo("#s4 .plate", { scale: 1.5, x: 160, y: 80, filter: "blur(21px)", opacity: 0 }, { scale: 1.01, x: 0, y: 0, filter: "blur(0px)", opacity: 1, duration: .50, ease: "expo.out" }, 7.07)
+        .fromTo("#s4 .yellow-mark", { scaleX: 0, transformOrigin: "left center" }, { scaleX: 1, duration: .30, ease: "power4.out" }, 7.58)
+        .to("#s4 .plate", { scale: 1.28, x: -96, y: -30, duration: .66, ease: "power2.inOut" }, 8.06)
+        .to("#s4 .plate, #s4 .yellow-mark", { scale: 1.13, x: -35, filter: "blur(18px)", opacity: 0, duration: .23, ease: "power3.in" }, 8.78);
+
+      tl.fromTo("#s5 .plate", { scale: 1.7, filter: "blur(25px)", opacity: 0 }, { scale: 1.02, filter: "blur(0px)", opacity: 1, duration: .42, ease: "expo.out" }, 9.01)
+        .to("#s5 .plate", { scale: 1.08, duration: .76, ease: "sine.inOut" }, 9.44)
+        .to("#s5 .plate", { scale: .35, opacity: 0, filter: "blur(12px)", duration: .26, ease: "power3.in" }, 10.20);
+
+      tl.fromTo("#s6 .plate", { scale: .45, opacity: 0, filter: "blur(9px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: .62, ease: "power3.out" }, 10.46)
+        .fromTo(".credit-copy", { opacity: 0, x: -15 }, { opacity: .72, x: 0, duration: .65 }, 10.66)
+        .to("#s6 .plate, .credit-copy", { scale: 1.03, duration: .82, ease: "sine.inOut" }, 11.08);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["reference-recreation"] = tl;
+    </script>
+  </body>
+</html>

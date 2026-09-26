@@ -1,5 +1,5 @@
 import { memo, useState, useCallback, useMemo, useRef } from "react";
-import { Plus, FolderSimplePlus } from "@phosphor-icons/react";
+import { Plus, FolderSimplePlus, UploadSimple } from "@phosphor-icons/react";
 import {
   buildTree,
   sortChildren,
@@ -57,6 +57,7 @@ export const FileTree = memo(function FileTree({
   } | null>(null);
   const [dragOverFolder, setDragOverFolder] = useState<string | null>(null);
   const dragSourceRef = useRef<string | null>(null);
+  const importInputRef = useRef<HTMLInputElement | null>(null);
 
   const hasFileOps = !!(
     onCreateFile ||
@@ -240,6 +241,31 @@ export const FileTree = memo(function FileTree({
             Files
           </span>
           <div className="flex items-center gap-0.5">
+            {onImportFiles && (
+              <>
+                <input
+                  ref={importInputRef}
+                  type="file"
+                  multiple
+                  className="hidden"
+                  aria-label="Choose files to import"
+                  onChange={(event) => {
+                    if (event.currentTarget.files?.length) {
+                      onImportFiles(event.currentTarget.files);
+                    }
+                    event.currentTarget.value = "";
+                  }}
+                />
+                <button
+                  onClick={() => importInputRef.current?.click()}
+                  className="p-1.5 rounded hover:bg-neutral-800 text-neutral-600 hover:text-neutral-400 active:scale-[0.97] transition-colors"
+                  title="Upload reference videos or other assets"
+                  aria-label="Upload reference videos or other assets"
+                >
+                  <UploadSimple size={12} weight="bold" />
+                </button>
+              </>
+            )}
             <button
               onClick={() => handleNewFile("")}
               className="p-1.5 rounded hover:bg-neutral-800 text-neutral-600 hover:text-neutral-400 active:scale-[0.97] transition-colors"

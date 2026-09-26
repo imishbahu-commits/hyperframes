@@ -1,0 +1,7 @@
+# User-uploaded media can be large and should stay out of Git.
+references/*
+!references/.gitkeep
+output/
+*.mp4
+*.mov
+*.webm
