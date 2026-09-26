@@ -64,6 +64,28 @@ async function currentBranch() {
   return branch;
 }
 
+async function syncWithRemote() {
+  const branch = await currentBranch();
+  const remoteRef = `refs/remotes/origin/${branch}`;
+  await execFileAsync("git", ["fetch", "origin", `${branch}:${remoteRef}`], { cwd: REPO_ROOT });
+  const [{ stdout: local }, { stdout: remote }] = await Promise.all([
+    execFileAsync("git", ["rev-parse", "HEAD"], { cwd: REPO_ROOT }),
+    execFileAsync("git", ["rev-parse", remoteRef], { cwd: REPO_ROOT }),
+  ]);
+  if (local.trim() === remote.trim()) return branch;
+  try {
+    await execFileAsync("git", ["merge-base", "--is-ancestor", "HEAD", remoteRef], {
+      cwd: REPO_ROOT,
+    });
+  } catch {
+    throw new Error(`local ${branch} has diverged from origin; refusing automatic reset`);
+  }
+  // Arena can reconstruct tracked bytes while leaving HEAD at the session base.
+  // A mixed reset advances branch/index without discarding those workspace files.
+  await execFileAsync("git", ["reset", "--mixed", remoteRef], { cwd: REPO_ROOT });
+  return branch;
+}
+
 async function persistToPublicGit(path) {
   const branch = await currentBranch();
   const relativePath = path.slice(REPO_ROOT.length + 1);
@@ -189,6 +211,7 @@ try{const init=await request('/api/uploads/init',{method:'POST',headers:{'conten
 async function loadFiles(){const host=document.querySelector('#files');try{const {files}=await request('/api/files');host.innerHTML=files.length?'':'<div class="empty">No references uploaded yet.</div>';for(const f of files){const el=document.createElement('div');el.className='file';el.innerHTML='<div class="row"><div><a target="_blank"></a><div class="meta"></div></div><button class="delete">Delete</button></div>';const a=el.querySelector('a');a.textContent=f.name;a.href=f.url;el.querySelector('.meta').textContent=size(f.size)+' · '+new Date(f.modified).toLocaleString();el.querySelector('button').onclick=async()=>{if(confirm('Remove '+f.name+' from the current branch? Public Git history may still retain its bytes.')){await request('/api/files/'+encodeURIComponent(f.name),{method:'DELETE'});loadFiles()}};host.append(el)}}catch(e){host.innerHTML='<div class="empty">Could not load uploads.</div>'}}loadFiles();
 </script></body></html>`;
 
+const syncedBranch = await syncWithRemote();
 const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url || "/", "http://localhost");
@@ -300,6 +323,6 @@ const server = createServer(async (req, res) => {
 });
 server.listen(PORT, HOST, () =>
   console.log(
-    `Reference upload server listening on http://${HOST}:${PORT}\nPublic Git-backed storage: ${ROOT}`,
+    `Reference upload server listening on http://${HOST}:${PORT}\nPublic Git-backed storage: ${ROOT}\nSynced branch: ${syncedBranch}`,
   ),
 );
